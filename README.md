@@ -5,9 +5,9 @@ Pages
 =====
 
 *   Home Page(Landing Page) Login/Register
-**   Search Playlists/Songs
---   Search Page
---   Provide playlistname and it brings up created playlists
+  *   Search Playlists/Songs
+*   Search Page
+  *   Provide playlistname and it brings up created playlists
 --   Maybe Songs?
 -   User Page
 --   Show userinfo
