@@ -4,9 +4,8 @@ Project for CMSC388J that allows users to create, share, and review music playli
 Pages
 =====
 
--   Home Page(Landing Page) 
---   Login/Register
---   Search Playlists/Songs
+*   Home Page(Landing Page) Login/Register
+**   Search Playlists/Songs
 --   Search Page
 --   Provide playlistname and it brings up created playlists
 --   Maybe Songs?
