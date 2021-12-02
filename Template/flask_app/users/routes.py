@@ -77,8 +77,8 @@ def user_detail(username):
     user = User.objects(username=username).first()
     playlists = Playlist.objects(author=user)
     favorites = user.favorites
-    img = get_b64_img(username)
-    return render_template("user_detail.html", username=username, playlists=playlists, image=img, favorites=favorites)
+    count = len(favorites)
+    return render_template("user_detail.html", username=username, playlists=playlists, favorites=favorites, count = count)
 
 def get_b64_img(username):
     user = User.objects(username = username).first()
