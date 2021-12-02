@@ -1,38 +1,23 @@
 import requests
 
 
-
-
-
-
 class Song(object):
-    def __init__(self):
-        self.title = ""  
-
-""" 
-class Movie(object):
-    def __init__(self, omdb_json, detailed=False):
-        if detailed:
-            self.genres = omdb_json["Genre"]
-            self.director = omdb_json["Director"]
-            self.actors = omdb_json["Actors"]
-            self.plot = omdb_json["Plot"]
-            self.awards = omdb_json["Awards"]
-
-        self.title = omdb_json["Title"]
-        self.year = omdb_json["Year"]
-        self.imdb_id = omdb_json["imdbID"]
-        self.type = "Movie"
-        self.poster_url = omdb_json["Poster"]
+    def __init__(self, deezer_json):
+        self.id = deezer_json["id"]
+        self.title = deezer_json["title"]
+        self.album = deezer_json["album"]["title"]
+        self.artist = deezer_json["artist"]["name"]
+        self.duration = deezer_json["duration"]
+        self.image = deezer_json["album"]["cover_medium"]
 
     def __repr__(self):
         return self.title
 
 
-class MovieClient(object):
-    def __init__(self, api_key):
+class DeezerClient(object):
+    def __init__(self):
         self.sess = requests.Session()
-        self.base_url = f"http://www.omdbapi.com/?apikey={api_key}&r=json&type=movie&"
+        self.base_url = f"https://api.deezer.com/search"
 
     def search(self, search_string):
         """
@@ -45,7 +30,7 @@ class MovieClient(object):
         search_string = "+".join(search_string.split())
         page = 1
 
-        search_url = f"s={search_string}&page={page}"
+        search_url = f"?q={search_string}"
 
         resp = self.sess.get(self.base_url + search_url)
 
@@ -56,62 +41,53 @@ class MovieClient(object):
 
         data = resp.json()
 
-        if data["Response"] == "False":
-            raise ValueError(f'[ERROR]: Error retrieving results: \'{data["Error"]}\' ')
+        # if data["Response"] == "False":
+        #     raise ValueError(f'[ERROR]: Error retrieving results: \'{data["Error"]}\' ')
 
-        search_results_json = data["Search"]
-        remaining_results = int(data["totalResults"])
+        search_results_json = data["data"]
+        remaining_results = int(data["total"])
 
         result = []
 
         ## We may have more results than are first displayed
-        while remaining_results != 0:
+        while remaining_results > 0:
             for item_json in search_results_json:
-                result.append(Movie(item_json))
+                result.append(Song(item_json))
                 remaining_results -= len(search_results_json)
-            page += 1
-            search_url = f"s={search_string}&page={page}"
+            page += 25
+            search_url = f"?q={search_string}&index={page}"
             resp = self.sess.get(self.base_url + search_url)
-            if resp.status_code != 200 or resp.json()["Response"] == "False":
+            if resp.status_code != 200:
                 break
-            search_results_json = resp.json()["Search"]
+            search_results_json = resp.json()["data"]
 
         return result
 
-    def retrieve_movie_by_id(self, imdb_id):
+    def retrieve_song_by_id(self, deezer_id):
         """
         Use to obtain a Movie object representing the movie identified by
         the supplied imdb_id
         """
-        movie_url = self.base_url + f"i={imdb_id}&plot=full"
+        track_url = 'https://api.deezer.com/track/' + str(deezer_id)
 
-        resp = self.sess.get(movie_url)
-
-        if resp.status_code != 200:
-            raise ValueError(
-                "Search request failed; make sure your API key is correct and authorized"
-            )
+        resp = self.sess.get(track_url)
 
         data = resp.json()
 
-        if data["Response"] == "False":
-            raise ValueError(f'Error retrieving results: \'{data["Error"]}\' ')
+        track = Song(data)
 
-        movie = Movie(data, detailed=True)
-
-        return movie
+        return track
 
 
 ## -- Example usage -- ###
 if __name__ == "__main__":
     import os
 
-    client = MovieClient(os.environ.get("OMDB_API_KEY"))
+    client = DeezerClient()
 
-    movies = client.search("guardians")
+    songs = client.search("location")
 
-    for movie in movies:
-        print(movie)
+    for song in songs:
+        print(song.artist)
 
-    print(len(movies))
- """
+    print(client.retrieve_song_by_id(120352046))
