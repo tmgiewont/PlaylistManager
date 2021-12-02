@@ -19,7 +19,7 @@ class User(db.Document, UserMixin):
     email = db.EmailField(required=True, unique=True)
     password = db.StringField(required=True)
     bio = db.StringField()
-    favorites = db.ListField(db.ReferenceField(Playlist))
+    favorites = db.ListField()
 
     # Returns unique string identifying our object
     def get_id(self):

@@ -60,6 +60,7 @@ def playlist_detail(playlist_id):
         return redirect(url_for("playlist.index"))
 
     img = get_b64_img(playlist)
+    count = len(playlist.songs)
 
     form = FavoritePlaylistForm()
     if form.validate_on_submit() and current_user.is_authenticated:
@@ -68,7 +69,7 @@ def playlist_detail(playlist_id):
         user.save()
         return redirect(request.path)
         
-    return render_template("playlist_detail.html", playlist=playlist, image=img, form=form)
+    return render_template("playlist_detail.html", playlist=playlist, image=img, form=form, count=count)
 
 #Edit Playlist Add/Remove Songs, edit playlist title,bio, and picture
 @playlist.route("/editplaylist/<playlist_id>", methods=["GET", "POST"])

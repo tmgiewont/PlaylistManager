@@ -28,6 +28,6 @@
     </div>
 </div>
 <a href="{{ url_for('songs.user_detail', username=current_user.username) }}">
-    <h4>Click here to see all of your posts and comments!</h4>
+    <h4>View {{current_user.username}}'s playlists</h4>
 </a>
 {% endblock %}>

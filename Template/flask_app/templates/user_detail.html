@@ -9,13 +9,13 @@
             {% for playlist in playlists %}
             <li class="media review-item">
                 <div class="media-body">
+                    <strong><a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
+                        {{ playlist.title }}
+                    </a>
+                    </strong>
                     <span class="float-right">
                         <small>{{ playlist.date }}</small>
                     </span>
-                    <strong>For: <a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
-                            {{ playlist.title }}
-                        </a>
-                    </strong>
                 </div>
             </li>
             {% endfor %}
@@ -29,13 +29,13 @@
             {% for playlist in favorites %}
             <li class="media review-item">
                 <div class="media-body">
+                    <strong><a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
+                        {{ playlist.title }}
+                    </a>
+                    </strong>
                     <span class="float-right">
                         <small>{{ playlist.date }}</small>
-                    </span>
-                    <strong>For: <a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
-                            {{ playlist.title }}
-                        </a>
-                    </strong>
+                    </span> 
                 </div>
             </li>
             {% endfor %}
