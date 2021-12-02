@@ -24,11 +24,12 @@ from .client import DeezerClient
 db = MongoEngine()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
-movie_client = DeezerClient()
+deezer_client = DeezerClient()
 
 #from .routes import main
 from .users.routes import users
 from .playlist.routes import playlist
+from .songs.routes import songs
 
 def page_not_found(e):
     return render_template("404.html"), 404
@@ -47,6 +48,7 @@ def create_app(test_config=None):
 
     #app.register_blueprint(main)
     app.register_blueprint(users)
+    app.register_blueprint(songs)
     app.register_blueprint(playlist)
 
     app.register_error_handler(404, page_not_found)

@@ -41,7 +41,7 @@ def test_search_input_validation(client, query, message):
 
 def test_movie_review(client, auth):
     guardians_id = "tt2015381"
-    url = f"/movies/{guardians_id}"
+    url = f"/songs/{guardians_id}"
     resp = client.get(url)
 
     assert resp.status_code == 200
@@ -81,7 +81,7 @@ def test_movie_review(client, auth):
     )
 )
 def test_movie_review_redirects(client, movie_id, message):
-    url = f"/movies/{movie_id}"
+    url = f"/songs/{movie_id}"
     resp = client.get(url, follow_redirects=False)
     if len(movie_id)  == 0:
         assert resp.status_code == 404
@@ -101,7 +101,7 @@ def test_movie_review_redirects(client, movie_id, message):
     )
 )
 def test_movie_review_input_validation(client, auth, comment, message):
-    url = f"/movies/tt2015381"
+    url = f"/songs/tt2015381"
 
     resp = auth.register()
     assert resp.status_code == 200

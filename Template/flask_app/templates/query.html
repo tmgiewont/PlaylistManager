@@ -7,9 +7,9 @@
 <div class="container-fluid">
     {% for result in results %}
     <div class="media">
-        <img src="{{ result.poster_url }}" class="mr-3 movie" alt="missing">
+        <img src="{{ result.image }}" class="mr-3 movie" alt="missing">
         <div class="media-body">
-        <h5 class="mt-0"><a href="{{ url_for('movies.movie_detail', movie_id=result.imdb_id) }}">{{ result.title }}</a> ({{ result.year }})</h5>
+        <h5 class="mt-0"><a href="{{ url_for('songs.song_detail', song_id=result.deezer_id) }}">{{ result.title }}</a> ({{ result.artist }})</h5>
         </div>
     </div>
     {% endfor %}

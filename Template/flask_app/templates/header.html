@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<<<<<<< HEAD
     <a class="navbar-brand" href="{{ url_for('playlist.index') }}">Movie Reviewer</a>
+=======
+    <a class="navbar-brand" href="{{ url_for('songs.index') }}">Movie Reviewer</a>
+>>>>>>> 7458565ed0e3dd06c649b84d27209e88cfc32c60
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav">
             {% if current_user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('users.account') }}">
@@ -19,6 +23,9 @@
                 <a class="nav-link" href="{{ url_for('users.logout') }}">
                     Logout
                 </a>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-primary" href="{{ url_for('users.register')}}">Create Playlist</button>
             </li>
             {% else %}
             <li class="nav-item">

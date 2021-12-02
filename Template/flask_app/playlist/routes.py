@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
-#from Template.flask_app import playlist
+from flask_app import playlist
 from flask_login import current_user
 
+
+songs = Blueprint("songs", __name__)
 from .. import movie_client
 from ..forms import MovieReviewForm, SearchForm, FavoritePlaylistForm
 from ..models import Playlist, User
@@ -10,25 +12,23 @@ from ..utils import current_time
 import io
 import base64
 
-playlist = Blueprint("playlist", __name__)
-
-@playlist.route("/", methods=["GET", "POST"])
+@songs.route("/", methods=["GET", "POST"])
 def index():
     form = SearchForm()
 
     if form.validate_on_submit():
-        return redirect(url_for("movies.query_results", query=form.search_query.data))
+        return redirect(url_for("songs.query_results", query=form.search_query.data))
 
     return render_template("index.html", form=form)
 
 
-@playlist.route("/search-results/<query>", methods=["GET"])
+@songs.route("/search-results/<query>", methods=["GET"])
 def query_results(query):
     try:
-        results = movie_client.search(query)
+        results = deezer_client.search(query)
     except ValueError as e:
         flash(str(e))
-        return redirect(url_for("movies.index"))
+        return redirect(url_for("songs.index"))
 
     return render_template("query.html", results=results)
 
