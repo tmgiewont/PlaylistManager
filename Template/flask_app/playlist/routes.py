@@ -1,3 +1,4 @@
+from types import DynamicClassAttribute
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_app import playlist
 from flask_login import current_user
@@ -5,7 +6,7 @@ from flask_login import current_user
 
 playlist = Blueprint("playlist", __name__)
 from .. import deezer_client
-from ..forms import MovieReviewForm, SearchForm, FavoritePlaylistForm
+from ..forms import MovieReviewForm, SearchForm, FavoritePlaylistForm, CreatePlaylistForm
 from ..models import Playlist, User
 from ..utils import current_time
 
@@ -21,6 +22,23 @@ def index():
 
     return render_template("index.html", form=form)
 
+@playlist.route("/create", methods=["GET", "POST"])
+def create():
+    form = CreatePlaylistForm()
+
+    if form.validate_on_submit() and current_user.is_authenticated:
+        playlist = Playlist(
+            author = current_user._get_current_object(),
+            title = form.title.data,
+            description = form.description.data,
+            date = current_time(),
+        )
+        playlist.save()
+        return redirect(request.path)
+
+    return render_template("create_playlist.html", form=form)
+    
+    
 
 @playlist.route("/search-results/<query>", methods=["GET"])
 def query_results(query):

@@ -72,7 +72,7 @@ def account():
     )
 
 
-@users.route("/user/<username>")
+@users.route("/user/<username>", methods=["GET"])
 def user_detail(username):
     user = User.objects(username=username).first()
     playlists = Playlist.objects(author=user)
