@@ -1,6 +1,15 @@
 import requests
 
 
+
+
+
+
+class Song(object):
+    def __init__(self):
+        self.title = ""  
+
+""" 
 class Movie(object):
     def __init__(self, omdb_json, detailed=False):
         if detailed:
@@ -105,3 +114,4 @@ if __name__ == "__main__":
         print(movie)
 
     print(len(movies))
+ """
