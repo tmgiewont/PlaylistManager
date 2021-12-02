@@ -52,6 +52,8 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("Email is taken")
 
+class FavoritePlaylistForm(FlaskForm):
+    submit = SubmitField("Favorite")
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[InputRequired()])
