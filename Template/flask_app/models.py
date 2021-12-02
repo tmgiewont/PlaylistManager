@@ -11,6 +11,8 @@ import base64
 def load_user(user_id):
     return User.objects(username=user_id).first()
 
+class Playlist:
+    pass
 
 class User(db.Document, UserMixin):
     username = db.StringField(required=True, unique=True)
@@ -18,16 +20,11 @@ class User(db.Document, UserMixin):
     password = db.StringField(required=True)
     profile_pic = db.ImageField()
     bio = db.StringField()
+    favorites = db.ListField(db.ReferenceField(Playlist))
 
     # Returns unique string identifying our object
     def get_id(self):
         return self.username
-
-class Review(db.Document):
-    commenter = db.ReferenceField(User, required=True)
-    playlist = db.ReferenceField(Playlist, required=True)
-    content = db.StringField(required=True, max_length=500, min_length=5)
-    date = db.StringField(required=True)
 
 class Playlist(db.Document):
     author = db.ReferenceField(User, required=True)
@@ -35,6 +32,5 @@ class Playlist(db.Document):
     description = db.StringField(required=True, min_length=5, max_length=500)
     date = db.StringField(required=True)
     songs = db.ListField()
-    reviews = db.ListField(db.ReferenceField(Review))
-
+    rate = db.FloatField(default=-1.0)
 

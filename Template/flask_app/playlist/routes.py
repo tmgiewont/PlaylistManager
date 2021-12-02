@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
+from Template.flask_app import playlist
 from flask_login import current_user
 
 from .. import movie_client
@@ -29,10 +30,10 @@ def query_results(query):
     return render_template("query.html", results=results)
 
 
-@movies.route("/movies/<movie_id>", methods=["GET", "POST"])
-def movie_detail(movie_id):
+@playlist.route("/playlist/<playlist_id>", methods=["GET", "POST"])
+def movie_detail(playlist_id):
     try:
-        result = movie_client.retrieve_movie_by_id(movie_id)
+        result = movie_client.retrieve_movie_by_id(playlist_id)
     except ValueError as e:
         flash(str(e))
         return redirect(url_for("users.login"))
@@ -57,9 +58,4 @@ def movie_detail(movie_id):
     )
 
 
-@movies.route("/user/<username>")
-def user_detail(username):
-    user = User.objects(username=username).first()
-    reviews = Review.objects(commenter=user)
 
-    return render_template("user_detail.html", username=username, reviews=reviews)

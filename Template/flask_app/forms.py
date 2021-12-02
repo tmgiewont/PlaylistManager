@@ -21,7 +21,7 @@ class SearchForm(FlaskForm):
     search_query = StringField(
         "Query", validators=[InputRequired(), Length(min=1, max=100)]
     )
-    submit = SubmitField("Search")
+    submit = SubmitField("Search Playlists")
 
 
 class MovieReviewForm(FlaskForm):
@@ -58,6 +58,15 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[InputRequired()])
     submit = SubmitField("Login")
 
+class CreatePlaylistForm(FlaskForm):
+    title = StringField("Playlist Title", validators=[InputRequired(), Length(min=3,max=20)])
+    description = TextAreaField("Description", validators=[Length(min=5,max=500)])
+    submit = SubmitField("Create Playlist")
+
+class UpdatePlaylistForm(FlaskForm):
+    title = StringField("Playlist Title", validators=[InputRequired(), Length(min=3,max=20)])
+    description = TextAreaField("Description", validators=[Length(min=5,max=500)])
+    submit = SubmitField("Create Playlist")
 
 class UpdateUsernameForm(FlaskForm):
     username = StringField(

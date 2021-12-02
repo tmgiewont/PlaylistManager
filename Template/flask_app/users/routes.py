@@ -1,9 +1,12 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
+from Template.flask_app import playlist
 from flask_login import current_user, login_required, login_user, logout_user
 
 from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
-from ..models import User
+from ..models import User, Review, Playlist
+import io
+import base64
 
 users = Blueprint("users", __name__)
 
@@ -67,3 +70,17 @@ def account():
         title="Account",
         username_form=username_form,
     )
+
+
+@users.route("/user/<username>")
+def user_detail(username):
+    user = User.objects(username=username).first()
+    playlists = Playlist.objects(author=user)
+    img = get_b64_img(username)
+    return render_template("user_detail.html", username=username, playlists=playlists, image=img)
+
+def get_b64_img(username):
+    user = User.objects(username = username).first()
+    bytes_im = io.BytesIO(user.profile_pic.read())
+    image = base64.b64encode(bytes_im.getvalue()).decode()
+    return image
