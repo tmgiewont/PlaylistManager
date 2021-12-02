@@ -1,18 +1,18 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
-from Template.flask_app import playlist
+#from Template.flask_app import playlist
 from flask_login import current_user
 
 from .. import movie_client
 from ..forms import MovieReviewForm, SearchForm, FavoritePlaylistForm
-from ..models import Playlist, User, Review
+from ..models import Playlist, User
 from ..utils import current_time
 
 import io
 import base64
 
-movies = Blueprint("movies", __name__)
+playlist = Blueprint("playlist", __name__)
 
-@movies.route("/", methods=["GET", "POST"])
+@playlist.route("/", methods=["GET", "POST"])
 def index():
     form = SearchForm()
 
@@ -22,7 +22,7 @@ def index():
     return render_template("index.html", form=form)
 
 
-@movies.route("/search-results/<query>", methods=["GET"])
+@playlist.route("/search-results/<query>", methods=["GET"])
 def query_results(query):
     try:
         results = movie_client.search(query)

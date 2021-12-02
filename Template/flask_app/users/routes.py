@@ -1,10 +1,10 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
-from Template.flask_app import playlist
+#from Template.flask_app import playlist
 from flask_login import current_user, login_required, login_user, logout_user
 
 from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
-from ..models import User, Review, Playlist
+from ..models import User,Playlist
 import io
 import base64
 
@@ -13,7 +13,7 @@ users = Blueprint("users", __name__)
 @users.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("movies.index"))
+        return redirect(url_for("playlist.index"))
 
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -29,7 +29,7 @@ def register():
 @users.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("movies.index"))
+        return redirect(url_for("playlist.index"))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -51,7 +51,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("movies.index"))
+    return redirect(url_for("playlist.index"))
 
 
 @users.route("/account", methods=["GET", "POST"])
@@ -76,8 +76,9 @@ def account():
 def user_detail(username):
     user = User.objects(username=username).first()
     playlists = Playlist.objects(author=user)
+    favorites = user.favorites
     img = get_b64_img(username)
-    return render_template("user_detail.html", username=username, playlists=playlists, image=img)
+    return render_template("user_detail.html", username=username, playlists=playlists, image=img, favorites=favorites)
 
 def get_b64_img(username):
     user = User.objects(username = username).first()

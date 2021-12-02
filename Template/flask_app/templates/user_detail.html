@@ -31,4 +31,24 @@
         </ul>
     </div>
 </div>
+<div class="row">
+    <div class="col">
+        <h1> Favorite Playlists <small class="float-right">{{ favorites.count() }} playlists</small></h1>
+        <ul class="media-list">
+            {% for playlist in favorites %}
+            <li class="media review-item">
+                <div class="media-body">
+                    <span class="float-right">
+                        <small>{{ playlist.date }}</small>
+                    </span>
+                    <strong>For: <a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
+                            {{ playlist.title }}
+                        </a>
+                    </strong>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
