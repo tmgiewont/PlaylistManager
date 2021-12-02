@@ -32,5 +32,16 @@ class Playlist(db.Document):
     description = db.StringField(required=True, min_length=5, max_length=500)
     date = db.StringField(required=True)
     songs = db.ListField()
+    profile_pic = db.ImageField()
     rate = db.FloatField(default=-1.0)
+
+    def get_duration(self):
+        tot = 0
+        for s in self.songs:
+            tot += s.duration
+        return tot / 60
+
+    
+
+    
 
