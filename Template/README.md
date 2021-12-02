@@ -52,7 +52,7 @@ In `__init__.py`, apps are now created by calling the
 in so that the application will be configured with the desired
 settings for testing. 
 
-We create the `db`, `login_manager`, and `movie_client` objects and
+We create the `db`, `login_manager`, and `deezer_client` objects and
 initialize them using the `init_app()` function of these extensions.
 
 Then we register the `main` blueprint (you'll change this later) and set
@@ -75,18 +75,18 @@ So you'll see that we created two directories that
 each have a `routes.py` inside of them. To complete
 this part of the project, you'll need to
 
-1. Create blueprints inside of `users.routes` and `movies.routes` named `users` and `movies`, respectively.
+1. Create blueprints inside of `users.routes` and `songs.routes` named `users` and `songs`, respectively.
 2. Put all user management view functions into the `users` blueprint. These are:
    - `register`,
    - `login`,
    - `account`,
    - `logout`
-3. Put all other view functions into the `movies` blueprint. These are:
+3. Put all other view functions into the `songs` blueprint. These are:
    - `index`
    - `query_results`
    - `movie_detail`
    - `user_detail`
-4. Rename routes from `main.some_route` to `users.some_route` or `movies.
+4. Rename routes from `main.some_route` to `users.some_route` or `songs.
    some_route` as appropriate. These changes will need to happen in the template
    files and in the function bodies as needed.
 5. Register these blueprints with the main `Flask` object.
@@ -113,9 +113,9 @@ We'll go into detail about how this code works:
 The `test_factory.py` file is provided with implemented tests so you can see how we
 test that our configuration values are properly set.
 
-You'll have to implement some tests in `test_movies.py` and `test_users.py`.
+You'll have to implement some tests in `test_songs.py` and `test_users.py`.
 
-`test_movies.py`
+`test_songs.py`
 - Implement `test_search_input_validation(client, query, message)` with `pytest.mark.parametrize`
   - Test that with an empty query, you get the error "This field is required."
   - Test that with a very short string, you get the error "Too many results"
@@ -133,7 +133,7 @@ You'll have to implement some tests in `test_movies.py` and `test_users.py`.
   - Test that the review shows up on the page
   - Test that the review is saved in the database
 - Implement `test_movie_review_redirects(client, movie_id, message)` with `pytest.mark.parametrize`
-  - This test refers to navigating to movies at a certain `/movies/<movie_id>` url.
+  - This test refers to navigating to songs at a certain `/songs/<movie_id>` url.
   - Test that with an empty movie_id, you get a status code of `404` and that you
     see the custom 404 page.
   - Test that with (1) a movie_id shorter than 9 characters, 

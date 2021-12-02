@@ -38,7 +38,7 @@
           <span class="float-right">
             <small>{{ review.date }}</small>
           </span>
-          <a href="{{ url_for('movies.user_detail', username=review.commenter.username) }}">
+          <a href="{{ url_for('songs.user_detail', username=review.commenter.username) }}">
             <strong>@{{ review.commenter.username }}</strong>
           </a>
           <p>

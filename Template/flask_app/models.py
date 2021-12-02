@@ -11,7 +11,7 @@ import base64
 def load_user(user_id):
     return User.objects(username=user_id).first()
 
-class Playlist:
+class Playlist(db.Document):
     pass
 
 class User(db.Document, UserMixin):
