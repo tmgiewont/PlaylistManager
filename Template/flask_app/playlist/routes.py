@@ -3,8 +3,8 @@ from flask_app import playlist
 from flask_login import current_user
 
 
-songs = Blueprint("songs", __name__)
-from .. import movie_client
+playlist = Blueprint("playlist", __name__)
+from .. import deezer_client
 from ..forms import MovieReviewForm, SearchForm, FavoritePlaylistForm
 from ..models import Playlist, User
 from ..utils import current_time
@@ -12,29 +12,29 @@ from ..utils import current_time
 import io
 import base64
 
-@songs.route("/", methods=["GET", "POST"])
+@playlist.route("/", methods=["GET", "POST"])
 def index():
     form = SearchForm()
 
     if form.validate_on_submit():
-        return redirect(url_for("songs.query_results", query=form.search_query.data))
+        return redirect(url_for("playlist.query_results", query=form.search_query.data))
 
     return render_template("index.html", form=form)
 
 
-@songs.route("/search-results/<query>", methods=["GET"])
+@playlist.route("/search-results/<query>", methods=["GET"])
 def query_results(query):
     try:
-        results = deezer_client.search(query)
+        results = Playlist.objects.search_text(query)
     except ValueError as e:
         flash(str(e))
-        return redirect(url_for("songs.index"))
+        return redirect(url_for("playlist.index"))
 
-    return render_template("query.html", results=results)
+    return render_template("playlistquery.html", results=results)
 
 #Displays playlist and gives user option to favorite
 @playlist.route("/playlist/<playlist_id>", methods=["GET", "POST"])
-def movie_detail(playlist_id):
+def playlist_detail(playlist_id):
     try:
         playlist = Playlist.objects(id=playlist_id).first()
     except ValueError as e:
@@ -50,7 +50,7 @@ def movie_detail(playlist_id):
         user.save()
         return redirect(request.path)
         
-    return render_template("movie_detail.html", playlist=playlist, image=img, form=form)
+    return render_template("playlist_detail.html", playlist=playlist, image=img, form=form)
 
 #Edit Playlist Add/Remove Songs, edit playlist title,bio, and picture
 @playlist.route("/editplaylist/<playlist_id>", methods=["GET", "POST"])

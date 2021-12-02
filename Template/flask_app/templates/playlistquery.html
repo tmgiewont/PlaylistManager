@@ -1,0 +1,19 @@
+{% extends "header.html" %}
+{% block content %}
+{% if error_msg %}
+    <p>{{ error_msg }}</p>
+{% endif %}
+
+<div class="container-fluid">
+    {% for result in results %}
+    <div class="media">
+        <img src="{{ result.image }}" class="mr-3 movie" alt="missing">
+        <div class="media-body">
+        <h5 class="mt-0"><a href="{{ url_for('playlist.playlist_detail', playlist_id=result.id) }}">{{ result.title }}</a> 
+            <a href = "{{ url_for('users.user_detail', username = result.author.username)}}">{{ result.author }}</a></h5>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -36,7 +36,7 @@
           <span class="float-right">
             <small>{{ review.date }}</small>
           </span>
-          <a href="{{ url_for('playlist.song_detail', song=song.id) }}">
+          <a href="{{ url_for('song.song_detail', song=song.id) }}">
             <strong>@{{ song.title }}</strong>
           </a>
         </div>

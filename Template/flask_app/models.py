@@ -18,7 +18,6 @@ class User(db.Document, UserMixin):
     username = db.StringField(required=True, unique=True)
     email = db.EmailField(required=True, unique=True)
     password = db.StringField(required=True)
-    profile_pic = db.ImageField()
     bio = db.StringField()
     favorites = db.ListField(db.ReferenceField(Playlist))
 
@@ -34,6 +33,15 @@ class Playlist(db.Document):
     songs = db.ListField()
     profile_pic = db.ImageField()
     rate = db.FloatField(default=-1.0)
+
+    meta = {'indexes': 
+            [
+                {'fields': ['$title', '$description'],
+                'default_language' : 'english',
+                'weights': {'title':10, 'description':2}
+                }
+            ]
+            }
 
     def get_duration(self):
         tot = 0
