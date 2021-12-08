@@ -1,4 +1,4 @@
-from flask_app import create_app, db
+from app import create_app, db
 from mongoengine.connection import disconnect
 
 

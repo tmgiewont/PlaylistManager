@@ -5,8 +5,8 @@ from types import SimpleNamespace
 import random
 import string
 
-from flask_app.forms import SearchForm, MovieReviewForm
-from flask_app.models import User, Review
+from app.forms import SearchForm, MovieReviewForm
+from app.models import User, Review
 
 
 def test_index(client):

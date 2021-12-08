@@ -3,9 +3,9 @@ from mongoengine.connection import disconnect
 
 from types import SimpleNamespace
 
-from flask_app import create_app, bcrypt
-from flask_app.models import User, Review
-from flask_app.forms import LoginForm, RegistrationForm
+from app import create_app, bcrypt
+from app.models import User, Review
+from app.forms import LoginForm, RegistrationForm
 
 
 @pytest.fixture

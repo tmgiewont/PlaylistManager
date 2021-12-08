@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
-from flask_app import playlist
+from app import playlist
 from flask_login import current_user, login_required, login_user, logout_user
 
 from .. import bcrypt

@@ -1,6 +1,6 @@
 from types import DynamicClassAttribute
 from flask import Blueprint, render_template, url_for, redirect, request, flash
-from flask_app import playlist
+from app import playlist
 from flask_login import current_user
 
 

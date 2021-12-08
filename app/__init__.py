@@ -15,7 +15,7 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
 
-from flask_app import users
+from app import users
 
 # local
 from .client import DeezerClient

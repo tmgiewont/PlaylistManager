@@ -3,8 +3,8 @@ import pytest
 
 from types import SimpleNamespace
 
-from flask_app.forms import RegistrationForm, UpdateUsernameForm
-from flask_app.models import User
+from app.forms import RegistrationForm, UpdateUsernameForm
+from app.models import User
 
 
 def test_register(client, auth):
