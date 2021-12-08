@@ -91,7 +91,7 @@ def edit_playlist(playlist_id):
 
     if form.validate_on_submit():
         print("HELLO")
-        return redirect(url_for("playlist.song_results", query=form.search_query.data, playlist_id=playlist_id))
+        return redirect(url_for("playlist.song_results", query=form.search_query.data, curr_playlist=playlist_id))
 
     return render_template("edit_playlist.html", form=form, playlist_id=playlist_id)
 

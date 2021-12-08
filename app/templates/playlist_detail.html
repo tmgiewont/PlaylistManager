@@ -29,15 +29,15 @@
 <div class="row">
   <div class="col-md-12 py-3">
     <h1> Songs </h1>
-    <ul class="media-list">
+    <div class="py-3">
       {% for song in playlist.songs %}
-      <li class="media review-item">
-        <div class="media-body">
-          <strong>{{ song.title }} - {{song.artist}}</strong>
+        <img src="{{ song.image }}" alt="missing">
+        <div class="media-body py-3">
+            <h5 class="mt-0">{{ song.title }}  - {{ song.artist }}</h5>
         </div>
-      </li>
       {% endfor %}
-    </ul>
+    </div>
+      
   </div>
 </div>
 
