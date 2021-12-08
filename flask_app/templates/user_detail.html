@@ -1,0 +1,47 @@
+{% extends "header.html" %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col">
+        <h1> Created Playlists <small class="float-right">{{ playlists.count() }} playlists</small></h1>
+        <ul class="media-list">
+            {% for playlist in playlists %}
+            <li class="media review-item">
+                <div class="media-body py-3">
+                    <strong><a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
+                        {{ playlist.title }}
+                    </a>
+                    </strong>
+                    <span class="float-right">
+                        <small>{{ playlist.date }}</small>
+                    </span>
+                    
+                    <a href="{{ url_for('playlist.edit_playlist', playlist_id=playlist.id)}}" class="btn btn-info" role="button">Edit Playlist</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h1> Favorite Playlists <small class="float-right">{{count}} playlists</small></h1>
+        <ul class="media-list">
+            {% for playlist in favorites %}
+            <li class="media review-item">
+                <div class="media-body">
+                    <strong><a href="{{ url_for('playlist.playlist_detail', playlist_id=playlist.id) }}">
+                        {{ playlist.title }}
+                    </a>
+                    </strong>
+                    <span class="float-right">
+                        <small>{{ playlist.date }}</small>
+                    </span> 
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

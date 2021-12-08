@@ -1,0 +1,56 @@
+{% extends "header.html" %}
+{% block content %}
+
+
+{% if playlist %}
+
+{# Display card for the movie details #}
+<div class="row">
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        {{ playlist.title }}
+      </div>
+      <div class="card-body">
+        <img class="propic" src="data:image/png;base64,{{image}}" alt="image">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><b>Created by:</b> {{ playlist.author.username }}</li>
+          <li class="list-group-item"><b>Description:</b> {{ playlist.description }}</li>
+          <li class="list-group-item"><b>Created On:</b> {{ playlist.date }}</li>
+          <li class="list-group-item"><b>Number Of Songs:</b> {{ count }}</li>
+          <li class="list-group-item"><b>Playlist Duration:</b> {{ playlist.get_duration() }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Songs #}
+<div class="row">
+  <div class="col-md-12 py-3">
+    <h1> Songs </h1>
+    <ul class="media-list">
+      {% for song in playlist.songs %}
+      <li class="media review-item">
+        <div class="media-body">
+          <strong>{{ song.title }} - {{song.artist}}</strong>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% if current_user.is_authenticated %}
+{# Favorite Playlist Form#}
+<div class="row py-3">
+  <div class="col">
+    <form method="POST" action="">
+      {{ favorite.csrf_token }}
+      {{ favorite.submit(class="btn btn-outline-secondary") }}
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock content %}
