@@ -12,9 +12,8 @@
         {{ playlist.title }}
       </div>
       <div class="card-body">
-        <img class="propic" src="data:image/png;base64,{{image}}" alt="image">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><b>Created by:</b> {{ playlist.author.username }}</li>
+          <li class="list-group-item"><b>Created by:</b> <a class="nav-link" href="{{url_for('users.user_detail',username=playlist.author.username) }}">{{playlist.author.username }}</a></li>
           <li class="list-group-item"><b>Description:</b> {{ playlist.description }}</li>
           <li class="list-group-item"><b>Created On:</b> {{ playlist.date }}</li>
           <li class="list-group-item"><b>Number Of Songs:</b> {{ count }}</li>
