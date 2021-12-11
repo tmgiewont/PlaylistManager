@@ -37,7 +37,7 @@ def page_not_found(e):
 def create_app(test_config=None):
     app = Flask(__name__)
 
-    app.config.from_pyfile("config.py", silent=False)
+    #app.config.from_pyfile("config.py", silent=False)
     if test_config is not None:
         app.config.update(test_config)
 
@@ -50,7 +50,8 @@ def create_app(test_config=None):
     app.register_blueprint(songs)
     app.register_blueprint(playlist)
 
-    app.config["MONGODB_HOST"] = os.getenv("MONGODB_HOST")
+    app.config["SECRET_KEY"] = b'\x020;yr\x91\x11\xbe"\x9d\xc1\x14\x91\xadf\xec'
+    app.config["MONGODB_HOST"] = "mongodb+srv://admin_user:database@playlistmanager.ydvtk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
     app.config['MAIL_SERVER']='smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
