@@ -41,10 +41,6 @@ def create_app(test_config=None):
     if test_config is not None:
         app.config.update(test_config)
 
-    db.init_app(app)
-    login_manager.init_app(app)
-    bcrypt.init_app(app)
-
     #app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(songs)
@@ -61,7 +57,10 @@ def create_app(test_config=None):
     app.config['MAIL_USE_SSL'] = True
 
 
-
+    db.init_app(app)
+    login_manager.init_app(app)
+    bcrypt.init_app(app)
+    
     mail.init_app(app)
     #global mail
     #mail = Mail(app)
