@@ -50,6 +50,7 @@ def create_app(test_config=None):
     app.register_blueprint(songs)
     app.register_blueprint(playlist)
 
+    app.config["MONGODB_HOST"] = os.getenv("MONGODB_HOST")
     app.config['MAIL_SERVER']='smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
