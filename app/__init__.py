@@ -10,8 +10,7 @@ from flask_login import (
 )
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
-
-# stdlib
+from flask_mail import Mail,Message# stdlib
 from datetime import datetime
 import os
 
@@ -25,7 +24,7 @@ db = MongoEngine()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 deezer_client = DeezerClient()
-
+mail = Mail()
 #from .routes import main
 from .users.routes import users
 from .playlist.routes import playlist
@@ -50,6 +49,22 @@ def create_app(test_config=None):
     app.register_blueprint(users)
     app.register_blueprint(songs)
     app.register_blueprint(playlist)
+
+    app.config['MAIL_SERVER']='smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+    app.config['MAIL_SENDER'] = os.environ.get('MAIL_SENDER')
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+    print(os.environ.get('MAIL_USERNAME'))
+    print(os.environ.get('MAIL_PASSWORD'))
+
+
+    mail.init_app(app)
+    #global mail
+    #mail = Mail(app)
 
     app.register_error_handler(404, page_not_found)
 

@@ -1,12 +1,14 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
 from app import playlist
+from flask_mail import Mail,Message# stdlib
 from flask_login import current_user, login_required, login_user, logout_user
 
-from .. import bcrypt
+from .. import bcrypt,mail
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
 from ..models import User, Playlist
 import io
 import base64
+import os
 
 users = Blueprint("users", __name__)
 
@@ -19,7 +21,10 @@ def register():
     if form.validate_on_submit():
         hashed = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         user = User(username=form.username.data, email=form.email.data, password=hashed)
+        msg = Message("Thank you for registering an account on Playlist Manager", sender = "noreply@gmail.com", recipients=[form.email.data])
+        mail.send(msg)
         user.save()
+        
 
         return redirect(url_for("users.login"))
 
@@ -51,7 +56,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("songs.index"))
+    return redirect(url_for("playlist.index"))
 
 
 @users.route("/account", methods=["GET", "POST"])

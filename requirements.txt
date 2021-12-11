@@ -34,3 +34,4 @@ WTForms==2.3.3
 gunicorn
 gevent
 Pillow
+Flask-Mail
