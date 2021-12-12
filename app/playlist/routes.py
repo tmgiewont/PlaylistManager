@@ -84,6 +84,11 @@ def playlist_detail(playlist_id):
 #Edit Playlist Add/Remove Songs, edit playlist title,bio, and picture
 @playlist.route("/editplaylist/<playlist_id>", methods=["GET", "POST"])
 def edit_playlist(playlist_id):
+
+    playlist = Playlist.objects(id=playlist_id).first()
+
+    if current_user.username != playlist.author:
+        return redirect(url_for("playlist.index"))
     form = SearchSongForm()
 
     if form.validate_on_submit():
