@@ -87,7 +87,7 @@ def edit_playlist(playlist_id):
 
     playlist = Playlist.objects(id=playlist_id).first()
 
-    if current_user.username != playlist.author:
+    if current_user.username != playlist.author.username:
         return redirect(url_for("playlist.index"))
     form = SearchSongForm()
 
